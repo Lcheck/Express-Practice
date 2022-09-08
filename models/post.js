@@ -18,4 +18,6 @@ module.exports = (sequelize)=>{
     // 모델의 추가 옵션들을 정할 수 있는 항
   });
 
+  return Post;
+  //리턴해줘야함
 };

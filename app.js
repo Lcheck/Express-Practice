@@ -1,13 +1,8 @@
 const express=require('express');
-const {sequelize} = require('./models');
-
+const {sequelize,Post} = require('./models');
 const app = express();
+const cors = require('cors');
 
-app.get('/',(req,res)=>{
-
-
-res.send('hello express');
-});
 
 //맨처음에 DB스키마가 만들어져 있어야 오류가 안남, npx sequelize db:create 해주자 config의 설정대로 db가 생성됨
 
@@ -20,6 +15,30 @@ sequelize.sync({ force: false })
    });
 //mysql와 sequelize 동기화
 
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
+//req.body를 사용하기 위해 달아주는 미들웨어
 
-app.listen(3065,()=>{console.log('서버실행중')});
+app.use(cors({
+   origin:'http://localhost:3000',
+   credentials:true,
+   }));
+//프론트-백엔드 간 port가 달라 발생하는 cors 문제 해결
+
+app.get('/',(req,res)=>{
+
+res.send('Hello!');
+})
+
+app.post('/post',async(req,res)=>{
+   console.log(req.body);
+   const post = await Post.create({text:req.body.text});
+   
+   res.status(200).send(post);
+
+   });
+app.listen(3065,()=>{
+   
+
+console.log('서버실행중')});
 
