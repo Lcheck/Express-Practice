@@ -30,8 +30,17 @@ app.get('/',(req,res)=>{
 res.send('Hello!');
 })
 
+app.get('/posts',async(req,res)=>{
+
+   const posts = await Post.findAll({
+                  attributes:['text']})
+
+   res.status(200).send(posts);
+   //post테이블중에서 text속성을 모두 가져와 객체 배열로 프론트에 반환
+
+   });
 app.post('/post',async(req,res)=>{
-   console.log(req.body);
+ 
    const post = await Post.create({text:req.body.text});
    
    res.status(200).send(post);
