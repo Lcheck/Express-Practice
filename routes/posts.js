@@ -15,10 +15,10 @@ router.use((req,res,next)=>{
 router.get('/',async(req,res)=>{
 
     const posts = await Post.findAll({
-                   attributes:['text']})
+                   attributes:['id','text']})
  
     res.status(200).send(posts);
-    //post테이블중에서 text속성을 모두 가져와 객체 배열로 프론트에 반환
+    //post테이블중에서 id,text속성을 가져와 객체 배열로 프론트에 반환
  
     });
 
