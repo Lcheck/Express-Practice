@@ -20,13 +20,16 @@ router.post('/',async(req,res)=>{ //게시글 등록
     })
 
 router.post('/:postId',async(req,res)=>{ //게시글 수정
-    const post = await Post.update({text:req.body.text},{where:{
+    await Post.update({text:req.body.text},{where:{
 
         id:req.params.postId
     }
     })
- 
-    res.status(200).send(post)
+
+    //update 메서드는 반환값이 존재하지 않기 때문에 전달 받은 id를 바탕으로 게시글을 찾은 뒤 프론트에 전달해줘야한다.
+   const post= await Post.findOne({where:{id:req.params.postId}})
+
+    res.status(200).send(post.dataValues)
  
     })
 
