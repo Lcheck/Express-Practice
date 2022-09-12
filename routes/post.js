@@ -11,9 +11,20 @@ router.use((req,res,next)=>{
 
 
 
-router.post('/',async(req,res)=>{
+router.post('/',async(req,res)=>{ //게시글 등록
  
     const post = await Post.create({text:req.body.text})
+ 
+    res.status(200).send(post)
+ 
+    })
+
+router.post('/:postId',async(req,res)=>{ //게시글 수정
+    const post = await Post.update({text:req.body.text},{where:{
+
+        id:req.params.postId
+    }
+    })
  
     res.status(200).send(post)
  
